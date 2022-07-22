@@ -2,6 +2,7 @@ package com.didichuxing.doraemonkit.kit.test.utils
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import android.view.View
 import android.view.ViewParent
 import android.view.accessibility.AccessibilityEvent
@@ -9,6 +10,7 @@ import android.view.accessibility.AccessibilityManager
 import com.didichuxing.doraemonkit.kit.test.hook.AccessibilityGetInstanceMethodHook
 import com.didichuxing.doraemonkit.kit.test.hook.ViewOnClickListenerEventHook
 import com.didichuxing.doraemonkit.kit.test.hook.ViewOnInitializeAccessibilityEventHook
+import com.didichuxing.doraemonkit.util.LogHelper
 import com.didichuxing.doraemonkit.util.Utils
 import de.robv.android.xposed.DexposedBridge
 import java.lang.reflect.Method
@@ -67,7 +69,7 @@ object XposedHookUtil {
     }
 
     private fun hookAccessibilityEvent() {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S) {
             try {
                 DexposedBridge.findAndHookMethod(
                     View::class.java,
@@ -82,7 +84,7 @@ object XposedHookUtil {
     }
 
     private fun unHookAccessibilityEvent() {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S) {
             try {
                 val method: Method = View::class.java.getDeclaredMethod("onInitializeAccessibilityEvent", AccessibilityEvent::class.java)
                 DexposedBridge.unhookMethod(method, accessibilityEventHook)
@@ -103,7 +105,8 @@ object XposedHookUtil {
     }
 
     private fun hookViewOnClickListener() {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.S) {
+            Log.i("XposedHookUtil", "hookViewOnClickListener")
             DexposedBridge.findAndHookMethod(
                 View::class.java,
                 "setOnClickListener",

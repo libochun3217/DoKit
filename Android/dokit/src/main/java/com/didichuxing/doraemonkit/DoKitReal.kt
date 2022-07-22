@@ -86,7 +86,7 @@ object DoKitReal {
         startAppHealth()
         initGpsMock()
         // 临时处理, Android S(31) 上Sand hook必崩
-        if (Build.VERSION.SDK_INT <= 30) {
+        if (Build.VERSION.SDK_INT <= 31) {
             //全局运行时hook
             globalRunTimeHook()
         }

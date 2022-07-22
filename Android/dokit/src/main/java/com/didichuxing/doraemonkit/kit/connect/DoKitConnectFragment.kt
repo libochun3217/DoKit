@@ -186,7 +186,7 @@ class DoKitConnectFragment : BaseFragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_SCAN && resultCode == Activity.RESULT_OK) {
             if (data != null && data.hasExtra(CaptureActivity.INTENT_EXTRA_KEY_QR_SCAN)) {
-                val url = data.getStringExtra(CaptureActivity.INTENT_EXTRA_KEY_QR_SCAN)
+                val url = data.getStringExtra(CaptureActivity.INTENT_EXTRA_KEY_QR_SCAN)?:""
                 if (!TextUtils.isEmpty(url)) {
                     try {
                         val uri = Uri.parse(url)

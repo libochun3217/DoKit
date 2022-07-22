@@ -23,6 +23,8 @@ buildscript {
             url "https://oss.sonatype.org/content/groups/public"
         }
 
+        maven { url 'https://jitpack.io' }
+
         println("[dokit build] add buildscript private repositories")
         println("[dokit build] usePrivateEnv=" + usePrivateEnv() +",privateRepository="+ privateRepository())
         println("[dokit build] useLocalRepository="+useLocalRepository()+",localRepository="+localRepository() )
@@ -67,10 +69,14 @@ allprojects {
         maven {
             url "https://oss.sonatype.org/content/groups/public"
         }
+        maven { url 'https://jitpack.io' }
 
         println("[dokit build] add allprojects repositories config project=" + project.name)
         println("[dokit build] usePrivateEnv=" + usePrivateEnv() + ",privateRepository=" + privateRepository())
         println("[dokit build] useLocalRepository=" + useLocalRepository() + ",localRepository=" + localRepository())
+        flatDir {
+            dirs project(':dokit-test').file('libs'), 'libs'
+        }
 
         if (usePrivateEnv()) {
             maven {
