@@ -1,5 +1,7 @@
 package com.didichuxing.doraemonkit.kit.test.mock
 
+import com.didichuxing.doraemonkit.kit.connect.data.TextPackage
+
 
 /**
  * didi Create on 2022/4/11 .
@@ -15,4 +17,12 @@ package com.didichuxing.doraemonkit.kit.test.mock
 interface ProxyMockCallback {
 
     fun send(data: String)
+}
+
+interface MockResponseCallback {
+    fun onResponse(key: String, data: String)
+}
+
+interface MockQueryRequestCallback {
+    fun onRequest(textPackage: TextPackage)
 }

@@ -24,6 +24,7 @@ data class ProxyResponse(
     val image: Boolean,
     val source: String,
     val protocol: String,
+    val requestUrl: String,
     val responseTime: String = DateTime.nowTime(),
     val requestTimeMillis: Long = DateTime.nowTimeMillis()
 )

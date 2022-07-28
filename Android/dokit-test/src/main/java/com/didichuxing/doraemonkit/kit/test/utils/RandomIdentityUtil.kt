@@ -1,6 +1,7 @@
 package com.didichuxing.doraemonkit.kit.test.utils
 
 import com.didichuxing.doraemonkit.util.RandomUtils
+import okio.ByteString
 
 
 /**
@@ -16,8 +17,8 @@ import com.didichuxing.doraemonkit.util.RandomUtils
 object RandomIdentityUtil {
 
 
-    fun createPid(): String {
-        return RandomUtils.random128HexString()
+    fun createPid(url: String): String {
+        return ByteString.encodeUtf8(url).md5().hex()
     }
 
     fun createAid(): String {

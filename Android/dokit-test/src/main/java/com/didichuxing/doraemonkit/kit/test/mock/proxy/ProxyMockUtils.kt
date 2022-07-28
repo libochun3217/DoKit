@@ -64,7 +64,7 @@ object ProxyMockUtils {
     fun createEmptyProxyResponse(did: String): ProxyResponse {
         return ProxyResponse(
             did, "",
-            "", 0, "", 404, false, "data", "local"
+            "", 0, "", 404, false, "data", "local", ""
         )
     }
 
@@ -89,8 +89,9 @@ object ProxyMockUtils {
         }
 
         val protocol = response.protocol().toString()
+        val requestUrl = response.request().url().toString()
 
-        return ProxyResponse(did, headers, contentType, contentLength, bodyString, code, image, source, protocol)
+        return ProxyResponse(did, headers, contentType, contentLength, bodyString, code, image, source, protocol, requestUrl)
     }
 
     fun filterRequest(request: Request): Boolean {

@@ -30,7 +30,7 @@ class ProxyMockManager {
     fun requestStart(request: ProxyRequest) {
         LogHelper.d(TAG, "requestStart() request=$request")
         val textPackage = TextPackage(
-            pid = RandomIdentityUtil.createPid(),
+            pid = RandomIdentityUtil.createPid(request.url),
             type = PackageType.DATA,
             data = GsonUtils.toJson(request),
             contentType = "request",
@@ -42,17 +42,18 @@ class ProxyMockManager {
     fun requestStop(response: ProxyResponse) {
         LogHelper.d(TAG, "requestStop() response=$response")
         val textPackage = TextPackage(
-            pid = RandomIdentityUtil.createPid(),
+            pid = RandomIdentityUtil.createPid(response.requestUrl),
             type = PackageType.DATA,
             data = GsonUtils.toJson(response),
             contentType = "response",
             connectSerial = DoKitConnectManager.getConnectSerial()
         )
         MockManager.sendMockTextPackage(textPackage)
+        MockManager.onMockResponse(textPackage)
     }
 
     fun requestQuery(request: ProxyRequest, callback: ProxyCallback) {
-        requestQueryNow(ProxyQueryData(RandomIdentityUtil.createPid(), request, callback))
+        requestQueryNow(ProxyQueryData(RandomIdentityUtil.createPid(request.url), request, callback))
     }
 
 
@@ -71,6 +72,7 @@ class ProxyMockManager {
             connectSerial = DoKitConnectManager.getConnectSerial()
         )
         MockManager.sendMockTextPackage(textPackage)
+        MockManager.onMockQueryRequest(textPackage)
     }
 
 

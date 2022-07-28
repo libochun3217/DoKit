@@ -27,6 +27,8 @@ object MockManager {
     var httpMockInterceptor: HttpMockInterceptor? = null
 
     var proxyMockCallback: ProxyMockCallback? = null
+    var mockResponseCallback: MockResponseCallback? = null
+    var mockQueryRequestCallback: MockQueryRequestCallback? = null
 
     private val proxyMockManager: ProxyMockManager = ProxyMockManager()
 
@@ -110,6 +112,27 @@ object MockManager {
         onHttpProxyMockSendListenerSet.forEach {
             try {
                 it.onHttpProxyMockSend(textPackage)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun onMockQueryRequest(textPackage: TextPackage) {
+        mockQueryRequestCallback?.let {
+            try {
+                it.onRequest(textPackage)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun onMockResponse(textPackage: TextPackage) {
+        val data = GsonUtils.toJson(textPackage)
+        mockResponseCallback?.let {
+            try {
+                it.onResponse(textPackage.pid, data)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
