@@ -5,6 +5,7 @@ import com.didichuxing.doraemonkit.kit.test.TestMode
 import com.didichuxing.doraemonkit.kit.test.mock.proxy.*
 import com.didichuxing.doraemonkit.kit.test.utils.XposedHookUtil
 import com.didichuxing.doraemonkit.util.GsonUtils
+import org.apache.commons.text.StringEscapeUtils
 
 
 /**
@@ -104,7 +105,8 @@ object MockManager {
         val data = GsonUtils.toJson(textPackage)
         proxyMockCallback?.let {
             try {
-                it.send(data)
+                val origin = StringEscapeUtils.unescapeEcmaScript(data)
+                it.send(StringEscapeUtils.unescapeEcmaScript(origin))
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -132,7 +134,8 @@ object MockManager {
         val data = GsonUtils.toJson(textPackage)
         mockResponseCallback?.let {
             try {
-                it.onResponse(textPackage.pid, data)
+                val origin = StringEscapeUtils.unescapeEcmaScript(data)
+                it.onResponse(textPackage.pid, StringEscapeUtils.unescapeEcmaScript(origin))
             } catch (e: Exception) {
                 e.printStackTrace()
             }
